@@ -7,7 +7,7 @@ layout: main
 	{% for event in page.events %}
 		<article class="box-item" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
             <span class="category">
-                <a href="{{ site.url }}{{ site.baseurl }}/category/{{ post.category }}">
+                <a href="{{ site.url }}{{ site.baseurl }}/category/{{ event.category }}">
                     <span title="{{ event.channel_title }}">{{ event.category }}</span>
                 </a>
             </span>

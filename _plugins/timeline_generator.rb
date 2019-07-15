@@ -1,7 +1,7 @@
 require 'jekyll/document'
 require 'json'
 require 'rubygems'
-
+require 'set'
 
 
 module Jekyll
@@ -21,6 +21,26 @@ module Jekyll
 	class TimelineFile < StaticFile
 		def write(dest)
 			true
+		end
+	end
+
+
+	class CategoryPage < Page 
+		#safe true
+
+		def initialize(site, base, dir, category, events)
+				@site = site
+				@base = base
+				@dir = dir
+				@name = 'index.html'
+
+				self.process(@name)
+				self.read_yaml(File.join(base, '_layouts'), 'category.html')
+				self.data['category'] = category
+				self.data['events'] = events
+
+				category_title_prefix = site.config['category_title_prefix'] || 'Category: '
+				self.data['title'] = "#{category_title_prefix}#{category}"
 		end
 	end
 
@@ -82,6 +102,16 @@ module Jekyll
 			}
 
 			timeline.data['events'] = events
+
+			cats = events.map { |e| e['category'] }.to_set
+
+			if site.layouts.key? 'category'
+				dir = site.config['category_dir'] || 'category'
+				#site.categories.each_key do |category|
+				cats.each do |category|
+					site.pages << CategoryPage.new(site, site.source, File.join(dir, category), category, events)
+				end
+			end
 		end
 
 	end
