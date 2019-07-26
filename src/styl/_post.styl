@@ -24,7 +24,7 @@
         color darken(lightGray,30%)
         text-align center
         mainFont(300)
-    p, h1, h2, h3, h4, h5, h6, ul, ol, iframe
+    p, h1, h2, h3, h4, h5, h6, ul, ol, iframe, dl
         center(rem(800px))
         mainFont(400)
         font-size rem(18px)
@@ -64,7 +64,7 @@
             margin-right rem(10px)
             +above(cut)
                 margin-right rem(30px)
-    li 
+    li, dt, dd 
         padding rem(10px) 0
         ul 
         margin-bottom 0
@@ -100,7 +100,7 @@
         line-height 1.4
         +above(cut)
             font-size rem(27px)
-    ul, ol
+    ul, ol, dd,  dt
         padding-left rem(40px)
     ul.post-list
         padding 0
