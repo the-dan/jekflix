@@ -49,8 +49,17 @@ module Jekyll
 		
 		TIMELINE_TEMPLATE = "timeline.md"
 		TIMELINE_FILENAME = "timeline.html"
+		ITEMS_FILE = "items.json"
 		
 		def generate(site)
+			sourceTime = File.mtime(ITEMS_FILE)
+			destTime = File.mtime(File.join("_site", "timeline", "index.html"))
+			puts sourceTime, destTime
+			if sourceTime < destTime
+				return
+			end
+
+
 			timeline_config = site.config['timeline'] || {}
 			@config = {}
 			@config['template'] = timeline_config['template'] || TIMELINE_TEMPLATE
@@ -70,7 +79,7 @@ module Jekyll
 				p.data
 			}
 
-			items = JSON.parse(File.read("items.json"))
+			items = JSON.parse(File.read(ITEMS_FILE))
 			items = items.map {
 				|i| 
 
